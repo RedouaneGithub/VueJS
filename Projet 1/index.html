@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Monster Munch</title>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">JOUEUR</h1>
+            <div class="healthbar">
+                <div
+                        class="healthbar text-center"
+                        style="background-color: green; margin: 0; color: white;"
+                        :style="{width: playerHealth + '%'}">  <!-- Ici on ajuste la barre vert à la vie du joueur en pourcentage -->
+                    {{ playerHealth }}
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">MONSTRE</h1>
+            <div class="healthbar">
+                <div
+                        class="healthbar text-center"
+                        style="background-color: green; margin: 0; color: white;"
+                        :style="{width: monsterHealth + '%'}">
+                    {{ monsterHealth }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row controls" v-if="!gameIsRunning">   <!-- Ici on met une condition pour faire apparaitre le bouton quand le jeu commence -->
+        <div class="small-12 columns">
+            <button id="start-game" @click="startGame">NOUVELLE PARTIE</button>
+        </div>
+    </section>
+    <section class="row controls" v-else>   <!-- Ici, si gameIsRunning est false, alors les boutons apparaissent -->
+        <div class="small-12 columns">
+            <button id="attack" @click="attack">ATTAQUE</button>
+            <button id="special-attack" @click="specialAttack">ATTAQUE SPECIAL</button>
+            <button id="heal" @click="heal">SOINS</button>
+            <button id="give-up" @click="giveUp">ABANDONNER</button>
+        </div>
+    </section>
+    <section class="row log" v-if="turns.length > 0">
+        <div class="small-12 columns">
+            <ul>
+                <li v-for="turn in turns"
+                    :class="{'player-turn': turn.isPlayer, 'monster-turn': !turn.isPlayer}">
+                    {{ turn.text }}
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
